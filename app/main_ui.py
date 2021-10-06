@@ -1,5 +1,5 @@
 from kivymd.uix.floatlayout import MDFloatLayout
 
 
-class FloatBuild(MDFloatLayout):
+class EntryPoint(MDFloatLayout):
     pass
