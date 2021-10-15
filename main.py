@@ -15,7 +15,7 @@ class HotReload(App,MDApp):
     ]
 
     def build_app(self):
-        return Factory.FloatBuild()
+        return Factory.EntryPoint()
 
 if __name__=='__main__':
     HotReload().run()
