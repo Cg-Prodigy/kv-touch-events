@@ -1,2 +1,38 @@
+#: import Window kivy.core.window.Window
 <EntryPoint>:
+    MDBoxLayout:
+        orientation: 'vertical'
+        MDToolbar:
+            md_bg_color:[1,1,1,1]
+            specific_text_color:(.3,.4,.3,1)
+            title:'Custom Slider'
+            id:t_b
+        ScrollView:
+            TaskList:
+                size_hint_y_min:Window.height-t_b.height
+                spacing:dp(4)
+                padding:[dp(7)]
     
+
+
+<TaskWidget>:
+    t_title:t_title
+    t_content:t_content
+    adaptive_height:True
+    radius:dp(10)
+    md_bg_color:(.3,.4,.1,1)
+    padding:[dp(7)]
+    ILabel:
+        id:t_title
+    Ln:
+    ILabel:
+        id:t_content
+
+
+<ILabel@MDLabel>:
+    adaptive_height:True
+    theme_text_color:'Custom'
+
+
+<Ln@MDSeparator>:
+    height:dp(2)
