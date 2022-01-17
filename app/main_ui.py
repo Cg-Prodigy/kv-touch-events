@@ -1,5 +1,6 @@
 from kivy.animation import Animation
 from kivy.metrics import dp
+from kivy.core.window import Window
 from kivy.properties import ObjectProperty,StringProperty
 from kivymd.uix.screen import MDScreen
 from kivymd.uix.list import MDList
@@ -15,27 +16,26 @@ class TaskWidget(MDBoxLayout):
     def __init__(self, **kwargs):
         super(TaskWidget,self).__init__(**kwargs)
         self.tdown=False
+        self.t_down=None
+        self.init_cords=()
+        self.opac=0.01
     def on_touch_down(self, touch):
         if self.collide_point(touch.x,touch.y):
-            self.tdown=True
+            self.init_cords=(self.x,self.y)
             touch.grab(self)
         return super().on_touch_down(touch)
-    def on_touch_up(self, touch):
-        if self.collide_point(touch.x,touch.y):
-            self.tdown=False
-            pos=dp(-200)
-            anime=Animation(x=pos,duration=.3)
+    def on_touch_move(self, touch):
+        if touch.grab_current is self and self.collide_point(touch.x,touch.y):
+            delta_x,delta_y=touch.dpos
+            anime=Animation(x=self.x+delta_x,y=self.y+delta_y,duration=0)
             anime.start(self)
+        return super().on_touch_move(touch)
+    def on_touch_up(self, touch):
+        if touch.grab_current is self:
+            self.x=self.init_cords[0]
+            self.y=self.init_cords[1]
             touch.ungrab(self)
         return super().on_touch_up(touch)
-    def on_touch_move(self,touch):
-        if self.collide_point(touch.x,touch.y):
-            if self.tdown:
-                return True
-            pos=dp(200)
-            anime=Animation(x=pos,duration=.3)
-            anime.start(self)
-            
 class TaskList(MDList):
    def __init__(self, **kwargs):
        super(TaskList,self).__init__(**kwargs)
